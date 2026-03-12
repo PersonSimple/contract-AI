@@ -1,0 +1,351 @@
+# Assignment: Contract Task Management System (Python + AI)
+
+## Objective
+
+Build a backend service that manages Contractors, Contracts, Tasks, and Cost tracking. The goal is to practice Python backend development, business rule implementation, proper exception handling, testing, and responsible use of AI coding tools.
+
+Technology Stack:
+
+* Python
+* FastAPI
+* SQLite or PostgreSQL
+* GitHub for version control
+
+Students may use AI assistants (such as Claude, ChatGPT, or Copilot) but must document how AI was used.
+
+---
+
+# 1. System Overview
+
+The system manages relationships between:
+
+* Contractor
+* Contract
+* Task
+* Cost
+
+Business flow:
+
+1. A Contractor can have multiple Contracts.
+2. A Contract can have multiple Tasks.
+3. Tasks record working hours.
+4. Cost is automatically calculated based on hourly rate.
+
+---
+
+# 2. Data Model
+
+## Contractor
+
+Fields:
+
+* id
+* name
+* email
+* skill
+* hourly_rate
+
+Rules:
+
+* hourly_rate must be positive
+
+## Contract
+
+Fields:
+
+* id
+* contract_name
+* contractor_id
+* start_date
+* end_date
+* max_budget
+* status
+
+Rules:
+
+* contract must belong to a contractor
+* max_budget must be greater than zero
+
+## Task
+
+Fields:
+
+* id
+* task_name
+* contract_id
+* estimated_hours
+* actual_hours
+* status
+
+Status values:
+
+* PENDING
+* IN_PROGRESS
+* COMPLETED
+
+## Cost
+
+Fields:
+
+* id
+* task_id
+* hours_worked
+* hourly_rate
+* total_cost
+* date
+
+Cost calculation rule:
+
+total_cost = hours_worked * hourly_rate
+
+Hourly rate must come from Contractor record.
+
+---
+
+# 3. Business Rules
+
+1. A Contractor may have multiple contracts.
+
+2. A Contract may have multiple tasks.
+
+3. Cost must always be calculated automatically.
+   Manual entry of total_cost is not allowed.
+
+4. Contract budget validation:
+
+If
+
+current_contract_cost + new_cost > max_budget
+
+The system must reject the operation.
+
+5. When a task status becomes COMPLETED:
+
+The system must:
+
+* update actual_hours
+* calculate task cost
+* update contract total cost
+
+6. Contract progress must be calculated as:
+
+progress = completed_tasks / total_tasks
+
+---
+
+# 4. API Requirements
+
+## Contractor APIs
+
+POST /contractors
+Create new contractor
+
+GET /contractors
+List all contractors
+
+GET /contractors/{id}
+Get contractor details
+
+## Contract APIs
+
+POST /contracts
+Create new contract
+
+GET /contracts
+List contracts
+
+GET /contracts/{id}
+Get contract details
+
+## Task APIs
+
+POST /tasks
+Create task
+
+GET /tasks/contract/{contractId}
+List tasks for a contract
+
+PATCH /tasks/{id}
+Update task status
+
+## Cost APIs
+
+POST /tasks/{id}/log-hours
+Log work hours
+System calculates cost automatically
+
+## Contract Summary API
+
+GET /contracts/{id}/summary
+
+Example response:
+
+{
+contractName,
+totalTasks,
+completedTasks,
+totalCost,
+remainingBudget
+}
+
+---
+
+# 5. Exception Handling
+
+The system must implement proper exception handling.
+
+Examples:
+
+ContractNotFoundException
+TaskNotFoundException
+BudgetExceededException
+InvalidHoursException
+
+Error response example:
+
+{
+"error": "BudgetExceededException",
+"message": "Contract budget limit exceeded"
+}
+
+---
+
+# 6. Validation Rules
+
+The following validations must be implemented:
+
+* hourly_rate must be positive
+* hours_worked must be positive
+* estimated_hours cannot be negative
+* task must belong to a valid contract
+
+Use request validation models.
+
+---
+
+# 7. Test Cases
+
+Unit tests must be written for:
+
+1. Cost calculation
+2. Budget validation
+3. Task completion logic
+4. Contract summary calculation
+
+Example test case:
+
+Test: cost calculation
+
+Input:
+hours_worked = 10
+hourly_rate = 50
+
+Expected result:
+
+total_cost = 500
+
+Test: budget exceeded
+
+contract budget = 1000
+current cost = 900
+new cost = 200
+
+Expected result:
+Operation rejected.
+
+Test framework suggestion:
+
+* pytest
+
+---
+
+# 8. GitHub Repository
+
+Create a GitHub repository.
+
+Repository structure:
+
+project-root/
+
+app/
+
+models/
+
+services/
+
+controllers/
+
+exceptions/
+
+tests/
+
+README.md
+
+Git requirements:
+
+* initial commit
+* meaningful commit messages
+* feature based commits
+
+Example:
+
+"Add contractor API"
+
+"Implement cost calculation logic"
+
+"Add budget validation"
+
+---
+
+# 9. Documentation
+
+README must contain:
+
+1. System architecture
+2. API list
+3. Setup instructions
+4. Database schema
+5. AI prompts used
+
+---
+
+# 10. AI Usage Policy
+
+AI tools may be used for assistance.
+
+However:
+
+1. Every AI prompt must be documented.
+2. Student must understand the generated code.
+3. Blind copy-paste is not allowed.
+
+Example documentation:
+
+Prompt:
+"Generate FastAPI model for contractor entity"
+
+---
+
+# 11. Tasks (Optional)
+
+1. Add authentication (JWT)
+2. Add pagination for APIs
+3. Add analytics endpoint
+4. Add Docker support
+
+---
+
+# 12. Evaluation Criteria
+
+Evaluation will be based on:
+
+* Code structure
+* Correct implementation of business rules
+* Exception handling
+* Test coverage
+* Documentation quality
+* Git usage
+
+---
+
+End of Assignment
