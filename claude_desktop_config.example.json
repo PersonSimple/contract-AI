@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "data-analyst": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\Yash Bindra\\OneDrive\\Desktop\\mcp_server\\server.py"
+      ]
+    }
+  },
+  "preferences": {
+    "coworkScheduledTasksEnabled": false,
+    "ccdScheduledTasksEnabled": false,
+    "coworkWebSearchEnabled": true,
+    "sidebarMode": "chat"
+  }
+}
