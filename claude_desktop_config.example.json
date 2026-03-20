@@ -1,16 +1,10 @@
 {
   "mcpServers": {
-    "data-analyst": {
+    "contract-ai": {
       "command": "python",
       "args": [
-        "C:\\Users\\Yash Bindra\\OneDrive\\Desktop\\mcp_server\\server.py"
+        "C:\\Users\\Yash Bindra\\OneDrive\\Desktop\\contract-AI\\server.py"
       ]
     }
-  },
-  "preferences": {
-    "coworkScheduledTasksEnabled": false,
-    "ccdScheduledTasksEnabled": false,
-    "coworkWebSearchEnabled": true,
-    "sidebarMode": "chat"
   }
 }
